@@ -1,9 +1,16 @@
 require("dotenv").config();
-
+const { sequelize } = require("./util/database");
+const { User } = require("./models/user");
+const { Post } = require("./models/post");
 const express = require('express')
 const cors = require('cors')
 
+
 const { PORT } = process.env
+
+User.hasMany(Post);
+Post.belongsTo(User);
+
 const {
   getAllPosts,
   getCurrentUserPosts,
@@ -31,3 +38,11 @@ app.get("/userposts/:userId", getCurrentUserPosts);
 app.post("/posts", isAuthenticated, addPost);
 app.put("/posts/:id", isAuthenticated, editPost);
 app.delete("/posts/:id", isAuthenticated, deletePost);
+sequelize
+  .sync()
+  .then(() => {
+    app.listen(PORT, () =>
+      console.log(`db sync successful & server running on port ${PORT}`)
+    );
+  })
+  .catch((err) => console.log(err));

@@ -39,7 +39,7 @@ app.delete("/posts/:id", isAuthenticated, deletePost);
 
 //the force: true is for development --it DROPS tables!!!
 sequelize
-  .sync({ force: true })
+  .sync()
   .then(() => {
     app.listen(SERVER_PORT, () =>
       console.log(

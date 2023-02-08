@@ -25,7 +25,7 @@ const Home = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [userId]);
+  }, []);
 
   const mappedPosts = posts.map((post) => {
     return (

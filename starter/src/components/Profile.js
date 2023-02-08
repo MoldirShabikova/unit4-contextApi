@@ -9,7 +9,7 @@ const Profile = () => {
 
     const [posts, setPosts] = useState([])
 
-    // console.log(userId, 'id')
+    console.log(userId, 'id')
 
     const getUserPosts = useCallback(() => {
         axios
@@ -57,13 +57,17 @@ const Profile = () => {
           });
     }
 
-    const mappedPosts = posts.map(post => {
+  const mappedPosts = posts.map(post => {
+      
+    console.log(post.userId, 'test')
         return (
           <div key={post.id} className="post-card">
             <h2>{post.title}</h2>
             <h4>{post.user.username}</h4>
             <p>{post.content}</p>
+            
             {userId === post.userId && (
+
               <div>
                 <button
                   className="form-btn"

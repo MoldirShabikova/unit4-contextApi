@@ -25,7 +25,7 @@ module.exports = {
   addPost: async (req, res) => {
     try {
       const { title, content, status, userId } = req.body;
-      console.log(userId,'userid')
+ 
       await Post.create({ title, content, privateStatus: status, userId });
       res.sendStatus(200)
     } catch (error) {

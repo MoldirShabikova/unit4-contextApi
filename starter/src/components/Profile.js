@@ -30,8 +30,8 @@ const Profile = () => {
             {
               headers: {
                 authorization: token,
-                "Content-Type": "application / json",
-              },
+                // "Content-Type": "application / json",
+              }
             }
           )
           .then(() => {
@@ -59,23 +59,29 @@ const Profile = () => {
 
     const mappedPosts = posts.map(post => {
         return (
-            <div key={post.id} className='post-card'>
-                <h2>{post.title}</h2>
-                <h4>{post.user.username}</h4>
-                <p>{post.content}</p>
-                {
-                    userId === post.userId &&
-                    <div>
-                        <button className='form-btn' onClick={() => updatePost(post.id, post.privateStatus)}>
-                            {post.privateStatus ? 'make public' : 'make private'}
-                        </button>
-                        <button className='form-btn' style={{marginLeft: 10}} onClick={() => deletePost(post.id)}>
-                            delete post
-                        </button>
-                    </div>
-                }
-            </div>
-        )
+          <div key={post.id} className="post-card">
+            <h2>{post.title}</h2>
+            <h4>{post.user.username}</h4>
+            <p>{post.content}</p>
+            {userId === post.userId && (
+              <div>
+                <button
+                  className="form-btn"
+                  onClick={() => updatePost(post.id, post.privateStatus)}
+                >
+                  {post.privateStatus ? "make public" : "make private"}
+                </button>
+                <button
+                  className="form-btn"
+                  style={{ marginLeft: 10 }}
+                  onClick={() => deletePost(post.id)}
+                >
+                  delete post
+                </button>
+              </div>
+            )}
+          </div>
+        );
     })
 
     return mappedPosts.length >= 1 ? (

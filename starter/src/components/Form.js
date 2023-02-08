@@ -18,7 +18,7 @@ const Form = () => {
 
     axios
       .post(
-        `${url}/posts/${userId}`,
+        `${url}/posts`,
         { title, content, status, userId },
         {
           headers: {

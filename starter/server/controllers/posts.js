@@ -2,19 +2,7 @@ const { Post } = require("../models/post");
 const { User } = require("../models/user");
 
 module.exports = {
-  addPost: async (req, res) => {
-    try {
-      const { title, content, status, userId } = req.body;
-
-      await Post.create({ title, content, privateStatus: status, userId });
-      res.sendStatus(200)
-    } catch (error) {
-      console.log("ERROR IN getCurrentUserPosts");
-      console.log(error);
-      res.sendStatus(400);
-    }
-  },
-
+  
   getAllPosts: async (req, res) => {
     try {
       const posts = await Post.findAll({
@@ -30,6 +18,18 @@ module.exports = {
       res.status(200).send(posts);
     } catch (error) {
       console.log("ERROR IN getAllPosts");
+      console.log(error);
+      res.sendStatus(400);
+    }
+  },
+  addPost: async (req, res) => {
+    try {
+      const { title, content, status, userId } = req.body;
+      console.log(userId,'userid')
+      await Post.create({ title, content, privateStatus: status, userId });
+      res.sendStatus(200)
+    } catch (error) {
+      console.log("ERROR IN getCurrentUserPosts");
       console.log(error);
       res.sendStatus(400);
     }

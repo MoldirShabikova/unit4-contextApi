@@ -4,14 +4,18 @@ import axios from 'axios'
 import AuthContext from '../store/authContext'
 
 const Profile = () => {
+     const url = "http://localhost:5050";
     const {userId, token} = useContext(AuthContext)
 
     const [posts, setPosts] = useState([])
 
+    // console.log(userId, 'id')
+
     const getUserPosts = useCallback(() => {
-        axios.get(`/userposts/${userId}`)
-            .then(res => setPosts(res.data))
-            .catch(err => console.log(err))
+        axios
+          .get(`${url}/userposts/${userId}`)
+          .then((res) => setPosts(res.data))
+          .catch((err) => console.log(err));
     }, [userId])
 
     useEffect(() => {
@@ -19,31 +23,38 @@ const Profile = () => {
     }, [getUserPosts])
 
     const updatePost = (id, status) => {
-        axios.put(`/posts/${id}`, {status: !status}, {
-            headers: {
-                authorization: token
+        axios
+          .put(
+            `${url}/posts/${id}`,
+            { status: !status },
+            {
+              headers: {
+                authorization: token,
+                "Content-Type": "application / json",
+              },
             }
-        })
-            .then(() => {
-                getUserPosts()
-            })
-            .catch(err => {
-                console.log(err)
-            })
+          )
+          .then(() => {
+            getUserPosts();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
     }
 
     const deletePost = id => {
-        axios.delete(`/posts/${id}`, {
+        axios
+          .delete(`${url}/posts/${id}`, {
             headers: {
-                authorization: token
-            }
-        })
-            .then(() => {
-                getUserPosts()
-            })
-            .catch(err => {
-                console.log(err)
-            })
+              authorization: token,
+            },
+          })
+          .then(() => {
+            getUserPosts();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
     }
 
     const mappedPosts = posts.map(post => {

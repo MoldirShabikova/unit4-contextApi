@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, createContext } from "react";
 
 let logoutTimer;
 
-const AuthContext = createContext({
+export const AuthContext = createContext({
   token: "",
   login: () => {},
   logout: () => {},
@@ -48,7 +48,7 @@ export const AuthContextProvider = (props) => {
   }
 
   const [token, setToken] = useState(initialToken);
-  const [userId, setUserId] = useState(initialId);
+  const [userId, setUserId] = useState(null);
 
   const logout = useCallback(() => {
     setToken(null);
@@ -68,7 +68,7 @@ export const AuthContextProvider = (props) => {
 
     localStorage.setItem("token", token);
     localStorage.setItem("exp", exp);
-    localStorage.setItem("userId", userId);
+    localStorage.setItem("userId", JSON.stringify(userId));
 
     const remainingTime = calculateRemainingTime(exp);
 

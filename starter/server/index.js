@@ -2,11 +2,11 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
-
+const { SERVER_PORT } = process.env;
 const { sequelize } = require("./util/database");
-const { PORT } = process.env;
 const { User } = require("./models/user");
 const { Post } = require("./models/post");
+
 const {
   getAllPosts,
   getCurrentUserPosts,
@@ -24,27 +24,27 @@ app.use(cors());
 
 User.hasMany(Post);
 Post.belongsTo(User);
-
-//AUTH
+//Auth
 app.post("/register", register);
 app.post("/login", login);
 
-// GET POSTS - no auth
+//GET posts - no Auth
 app.get("/posts", getAllPosts);
 
-// CRUD POSTS - auth required
+//CRUD posts - Auth required
 app.get("/userposts/:userId", getCurrentUserPosts);
 app.post("/posts", isAuthenticated, addPost);
 app.put("/posts/:id", isAuthenticated, editPost);
 app.delete("/posts/:id", isAuthenticated, deletePost);
 
-// the force: true is for development -- it DROPS tables!!!
+//the force: true is for development --it DROPS tables!!!
 sequelize
   .sync({ force: true })
-  // sequelize.sync()
   .then(() => {
-    app.listen(PORT, () =>
-      console.log(`db sync successful & server running on port ${PORT}`)
+    app.listen(SERVER_PORT, () =>
+      console.log(
+        `Database sync successful. Server running on port ${SERVER_PORT}`
+      )
     );
   })
   .catch((err) => console.log(err));

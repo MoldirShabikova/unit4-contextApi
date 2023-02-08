@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import AuthContext from "../store/authContext";
 
 const Form = () => {
+  const url = "http://localhost:5050";
   const { token, userId } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -17,11 +18,12 @@ const Form = () => {
 
     axios
       .post(
-        "/posts",
+        `${url}/posts/${userId}`,
         { title, content, status, userId },
         {
           headers: {
             authorization: token,
+       
           },
         }
       )

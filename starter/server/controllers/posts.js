@@ -5,8 +5,9 @@ module.exports = {
   addPost: async (req, res) => {
     try {
       const { title, content, status, userId } = req.body;
+
       await Post.create({ title, content, privateStatus: status, userId });
-      res.sendStatus(200);
+      res.sendStatus(200)
     } catch (error) {
       console.log("ERROR IN getCurrentUserPosts");
       console.log(error);
